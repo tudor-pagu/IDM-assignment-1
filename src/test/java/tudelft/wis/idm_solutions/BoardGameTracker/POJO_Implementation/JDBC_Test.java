@@ -49,9 +49,9 @@ public class JDBC_Test extends tudelft.wis.idm_solutions.BoardGameTracker.Abstra
         // Create dummy data
         Collection<PlaySession> testSessions = this.createDummyData(12, 6);
 
-        for (PlaySession session : testSessions) {
-            Logger.info("Session Created: \n" + session.toVerboseString());
-        }
+//        for (PlaySession session : testSessions) {
+//            Logger.info("Session Created: \n" + session.toVerboseString());
+//        }
 
         // Get dummy session & related data
         PlaySession firstsession = testSessions.iterator().next();
