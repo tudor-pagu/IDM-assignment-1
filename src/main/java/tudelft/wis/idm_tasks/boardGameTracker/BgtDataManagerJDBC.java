@@ -46,7 +46,23 @@ public class BgtDataManagerJDBC implements BgtDataManager {
     }
     @Override
     public Player createNewPlayer(String name, String nickname) throws BgtException {
+        Player player = new PlayerJDBC(
+                name,
+                nickname,
+                getPlayerCollection(nickname)
+        );
 
+        try {
+            String query = "INSERT INTO player (name, nickname) VALUES (?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, name);
+            statement.setString(2, nickname);
+            statement.execute();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        return player;
     }
 
     @Override
