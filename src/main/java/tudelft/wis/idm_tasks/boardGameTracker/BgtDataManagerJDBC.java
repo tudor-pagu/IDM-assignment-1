@@ -164,7 +164,9 @@ public class BgtDataManagerJDBC implements BgtDataManager {
         String bggURL = game.getBGG_URL();
         Connection con = this.getConnection();
         try {
-            String sql = "INSERT OR REPLACE INTO board_game (name, url) VALUES (?, ?)";
+            String sql = "INSERT INTO board_game (name, url) VALUES (?, ?) " +
+                    "ON CONFLICT (name) DO UPDATE " +
+                    "SET url = excluded.url";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, name);
             ps.setString(2, bggURL);
