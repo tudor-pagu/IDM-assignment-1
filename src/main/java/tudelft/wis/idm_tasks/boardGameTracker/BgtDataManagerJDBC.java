@@ -63,13 +63,8 @@ public class BgtDataManagerJDBC implements BgtDataManager {
             while (rs.next()) {
                 String pname = rs.getString(1);
                 String pnickname = rs.getString(2);
-                Collection<BoardGame> bgCollection = new ArrayList<>();
-                String bgCollSql = "SELECT bg.name, bg.url FROM board_game bg " +
-                        "JOIN player_boardgame pb ON pb. " +
-                        "WHERE pb.player_nickname = " + pname;
-                Statement statement = con.createStatement();
-                ResultSet collectionRs = statement.executeQuery(bgCollSql);
-                bgCollection.add(new PlayerJDBC(pname, pnickname, ));
+                Collection<BoardGame> bgCollection = getPlayerCollection(pnickname);
+                playerCollection.add(new PlayerJDBC(pname, pnickname, bgCollection));
             }
             return playerCollection;
         } catch (Exception e) {
@@ -80,7 +75,18 @@ public class BgtDataManagerJDBC implements BgtDataManager {
 
     @Override
     public BoardGame createNewBoardgame(String name, String bggURL) throws BgtException {
-        return null;
+        BoardGame bg = new BoardGameJDBC(name, bggURL);
+        Connection con = this.getConnection();
+        try {
+            String sql = "INSERT INTO board_game (name, url) VALUES (?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, bggURL);
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bg;
     }
 
     @Override
