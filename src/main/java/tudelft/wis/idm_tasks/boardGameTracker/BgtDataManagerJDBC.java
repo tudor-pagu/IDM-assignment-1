@@ -150,6 +150,17 @@ public class BgtDataManagerJDBC implements BgtDataManager {
 
     @Override
     public void persistBoardGame(BoardGame game) {
-
+        String name = game.getName();
+        String bggURL = game.getBGG_URL();
+        Connection con = this.getConnection();
+        try {
+            String sql = "INSERT OR REPLACE INTO board_game (name, url) VALUES (?, ?)";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, bggURL);
+            ps.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
