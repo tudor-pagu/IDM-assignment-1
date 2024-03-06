@@ -15,8 +15,8 @@ public class BgtDataManagerJDBC implements BgtDataManager {
     Connection connection;
     public Connection getConnection() {
         String url = "jdbc:postgresql://localhost:5432/idm1pg";
-        String user = "postgres";
-        String password = "postgres";
+        String user = Credentials.user;
+        String password = Credentials.password;
         try {
             this.connection = DriverManager.getConnection(url, user, password);
             return this.connection;
