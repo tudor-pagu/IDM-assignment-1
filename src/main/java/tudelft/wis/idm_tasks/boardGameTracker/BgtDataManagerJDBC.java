@@ -140,7 +140,15 @@ public class BgtDataManagerJDBC implements BgtDataManager {
 
     @Override
     public void persistPlayer(Player player) {
-
+        try {
+            String query = "INSERT OR REPLACE INTO player (name, nickname) VALUES (?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, player.getPlayerName());
+            statement.setString(2, player.getPlayerNickName());
+            statement.execute();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
