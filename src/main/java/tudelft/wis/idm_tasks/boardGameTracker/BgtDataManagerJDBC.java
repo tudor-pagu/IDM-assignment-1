@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public class BgtDataManagerJDBC implements BgtDataManager {
     Connection connection;
@@ -24,9 +25,28 @@ public class BgtDataManagerJDBC implements BgtDataManager {
         }
     }
 
+    public Collection<BoardGame> getPlayerCollection(String nickname)  throws BgtException{
+        String query = "\n" +
+                "SELECT b.name, b.url FROM player_boardgame pb \n" +
+                "JOIN board_game b ON b.name = pb.boardgame_name\n" +
+                "WHERE pb.player_nickname=?";
+        List<BoardGame> result = new ArrayList<>();
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, nickname);
+            ResultSet resultSet = statement.executeQuery();
+            while(resultSet.next()) {
+                result.add(new BoardGameJDBC(resultSet.getString("name"),
+                        resultSet.getString("url")));
+            }
+        } catch (SQLException e) {
+            throw new BgtException();
+        }
+        return result;
+    }
     @Override
     public Player createNewPlayer(String name, String nickname) throws BgtException {
-        return null;
+
     }
 
     @Override
