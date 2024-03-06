@@ -1,19 +1,20 @@
 package tudelft.wis.idm_tasks.boardGameTracker;
 
 import oracle.ucp.jdbc.ConnectionConnectionPool;
+import tudelft.wis.idm_solutions.BoardGameTracker.POJO_Implementation.PlaySession_POJO;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BgtDataManager;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BoardGame;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.PlaySession;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.Player;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 import java.util.Date;
-import java.util.List;
 
 public class BgtDataManagerJDBC implements BgtDataManager {
     Connection connection;
+    private List<PlaySessionJDBC_NoCon> sessions = new LinkedList<>();
+
 
     public BgtDataManagerJDBC() {
         getConnection();
@@ -133,12 +134,20 @@ public class BgtDataManagerJDBC implements BgtDataManager {
 
     @Override
     public PlaySession createNewPlaySession(Date date, Player host, BoardGame game, int playtime, Collection<Player> players, Player winner) throws BgtException {
-        return null;
+        PlaySessionJDBC_NoCon session = new PlaySessionJDBC_NoCon(date, host, game, playtime, players, winner);
+        sessions.add(session);
+        return session;
     }
 
     @Override
     public Collection<PlaySession> findSessionByDate(Date date) throws BgtException {
-        return null;
+        Collection<PlaySession> result = new LinkedList<PlaySession>();
+        for (PlaySessionJDBC_NoCon session : sessions) {
+            if (session.getDate().equals(date)) {
+                result.add(session);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -150,9 +159,9 @@ public class BgtDataManagerJDBC implements BgtDataManager {
             deletePs.setString(1, player.getPlayerNickName());
             deletePs.execute();
 
-            String query = "INSERT INTO player (name, nickname) VALUES (?, ?)\n" +
-                    "ON CONFLICT (nickname) DO UPDATE\n" +
-                    "SET name = excluded.name;";
+            String query = "INSERT INTO player (name, nickname) VALUES (?, ?) " +
+                    "ON CONFLICT (nickname) DO UPDATE " +
+                    "SET name = excluded.name";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, player.getPlayerName());
             statement.setString(2, player.getPlayerNickName());
@@ -162,7 +171,10 @@ public class BgtDataManagerJDBC implements BgtDataManager {
                 persistBoardGame(bg);
                 String bgpQuery = "INSERT INTO player_boardgame (player_nickname, boardgame_name) " +
                         "VALUES (?, ?)";
-                
+                PreparedStatement ps = connection.prepareStatement(bgpQuery);
+                ps.setString(1, player.getPlayerNickName());
+                ps.setString(2, bg.getName());
+                ps.execute();
             }
         } catch(Exception e) {
             e.printStackTrace();
