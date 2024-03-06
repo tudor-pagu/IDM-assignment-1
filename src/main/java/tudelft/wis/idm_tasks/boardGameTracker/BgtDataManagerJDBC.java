@@ -141,7 +141,9 @@ public class BgtDataManagerJDBC implements BgtDataManager {
     @Override
     public void persistPlayer(Player player) {
         try {
-            String query = "INSERT OR REPLACE INTO player (name, nickname) VALUES (?, ?)";
+            String query = "INSERT INTO player (name, nickname) VALUES (?, ?)\n" +
+                    "ON CONFLICT (nickname) DO UPDATE\n" +
+                    "SET name = excluded.name;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, player.getPlayerName());
             statement.setString(2, player.getPlayerNickName());

@@ -6,6 +6,7 @@ package tudelft.wis.idm_solutions.BoardGameTracker.POJO_Implementation;
 
 import org.junit.jupiter.api.Test;
 import org.tinylog.Logger;
+import tudelft.wis.idm_tasks.boardGameTracker.BgtDataManagerJDBC;
 import tudelft.wis.idm_tasks.boardGameTracker.BgtException;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BgtDataManager;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BoardGame;
@@ -29,7 +30,7 @@ public class POJO_Test extends tudelft.wis.idm_solutions.BoardGameTracker.Abstra
     public POJO_Test() {
     }
 
-    private BgtDataManager_POJO dataManager = new BgtDataManager_POJO();
+    private BgtDataManager dataManager = new BgtDataManagerJDBC();
 
     @Override
     public BgtDataManager getBgtDataManager() {
