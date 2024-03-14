@@ -1,7 +1,7 @@
 package tudelft.wis.idm_solutions.BoardGameTracker;
 
 import com.github.javafaker.Faker;
-import tudelft.wis.idm_tasks.boardGameTracker.BgtException;
+import tudelft.wis.idm_tasks.boardGameTracker.JDBC.BgtException;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BgtDataManager;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BoardGame;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.PlaySession;

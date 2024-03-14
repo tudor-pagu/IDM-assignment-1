@@ -6,8 +6,8 @@ package tudelft.wis.idm_solutions.BoardGameTracker.POJO_Implementation;
 
 import org.junit.jupiter.api.Test;
 import org.tinylog.Logger;
-import tudelft.wis.idm_tasks.boardGameTracker.BgtDataManagerJDBC;
-import tudelft.wis.idm_tasks.boardGameTracker.BgtException;
+import tudelft.wis.idm_tasks.boardGameTracker.JDBC.BgtDataManagerJDBC;
+import tudelft.wis.idm_tasks.boardGameTracker.JDBC.BgtException;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BgtDataManager;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BoardGame;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.PlaySession;

@@ -1,4 +1,4 @@
-package tudelft.wis.idm_tasks.boardGameTracker;
+package tudelft.wis.idm_tasks.boardGameTracker.JDBC;
 
 
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BgtDataManager;

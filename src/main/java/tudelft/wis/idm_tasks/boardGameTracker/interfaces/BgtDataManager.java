@@ -7,7 +7,7 @@ package tudelft.wis.idm_tasks.boardGameTracker.interfaces;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Date;
-import tudelft.wis.idm_tasks.boardGameTracker.BgtException;
+import tudelft.wis.idm_tasks.boardGameTracker.JDBC.BgtException;
 
 // Add other necessary imports here
 

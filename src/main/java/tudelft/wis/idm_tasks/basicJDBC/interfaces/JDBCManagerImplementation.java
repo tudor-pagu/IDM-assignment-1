@@ -11,4 +11,5 @@ class JDBCManagerImplementation implements JDBCManager {
         String password = "postgres";
         return DriverManager.getConnection(url, user, password);
     }
+
 }
