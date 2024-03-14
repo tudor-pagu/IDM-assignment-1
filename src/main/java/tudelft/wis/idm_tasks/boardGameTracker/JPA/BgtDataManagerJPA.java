@@ -49,12 +49,18 @@ public class BgtDataManagerJPA implements BgtDataManager {
 
     @Override
     public Collection<BoardGame> findGamesByName(String name) throws BgtException {
-        return games.stream().filter(x -> x.getName().equals(name)).toList();
+        this.jpaManager.getEntityManager().getTransaction().begin();
+        Query query = this.jpaManager.getEntityManager()
+                .createQuery("SELECT g FROM BoardGameJPA g WHERE g.name=:name");
+        query.setParameter("name", name);
+        return query.getResultList();
     }
 
     @Override
     public PlaySession createNewPlaySession(Date date, Player host, BoardGame game, int playtime, Collection<Player> players, Player winner) throws BgtException {
-        return null;
+        PlaySession playSession = new PlaySessionJPA(date, host, game, players, winner, playtime);
+        persistPlaySession(playSession);
+        return playSession;
     }
 
     @Override
