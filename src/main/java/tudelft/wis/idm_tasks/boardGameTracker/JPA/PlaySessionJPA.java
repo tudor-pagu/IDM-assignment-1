@@ -96,6 +96,15 @@ public class PlaySessionJPA implements PlaySession {
     }
 
     public String toVerboseString() {
-        return null;
+        String result = game.toVerboseString() + " {";
+        result = result + "\n  Date: " + date.toString();
+        result = result + "\n  Playtime: " + playtime;
+        result = result + "\n  Host: " + host.toVerboseString();
+        result = result + "\n  Players: ";
+        for (Player player : players) {
+            result = result + player.toVerboseString() + "; ";
+        }
+        result = result + "\n}\n";
+        return result;
     }
 }
