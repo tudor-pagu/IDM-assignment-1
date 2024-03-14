@@ -11,6 +11,13 @@ public class BoardGameJPA implements BoardGame {
     @Id
     private String name;
     private String url;
+    public BoardGameJPA() {
+
+    }
+    public BoardGameJPA(String name, String url) {
+        this.name = name;
+        this.url = url;
+    }
     @Override
     public String getName() {
         return this.name;
