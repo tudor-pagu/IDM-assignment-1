@@ -1,9 +1,7 @@
 package tudelft.wis.idm_tasks.boardGameTracker.JPA;
 
+import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Root;
 import tudelft.wis.idm_tasks.boardGameTracker.JDBC.BgtException;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BgtDataManager;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BoardGame;
@@ -65,21 +63,22 @@ public class BgtDataManagerJPA implements BgtDataManager {
 
     @Override
     public Collection<PlaySession> findSessionByDate(Date date) throws BgtException {
+        EntityManager em = jpaManager.getEntityManager();
         return null;
     }
 
     @Override
     public void persistPlayer(Player player) {
-
+        jpaManager.persist(player);
     }
 
     @Override
     public void persistPlaySession(PlaySession session) {
-
+        jpaManager.persist(session);
     }
 
     @Override
     public void persistBoardGame(BoardGame game) {
-
+        jpaManager.persist(game);
     }
 }
