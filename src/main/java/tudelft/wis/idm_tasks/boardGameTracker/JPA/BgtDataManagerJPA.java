@@ -58,7 +58,10 @@ public class BgtDataManagerJPA implements BgtDataManager {
     @Override
     public Collection<PlaySession> findSessionByDate(Date date) throws BgtException {
         EntityManager em = jpaManager.getEntityManager();
-        return null;
+        em.getTransaction().begin();
+        Query query = em.createQuery("SELECT ps FROM PlaySessionJPA ps WHERE ps.date=:date");
+        query.setParameter("date", date);
+        return query.getResultList();
     }
 
     @Override
