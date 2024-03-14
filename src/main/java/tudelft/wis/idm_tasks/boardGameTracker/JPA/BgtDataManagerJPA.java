@@ -1,7 +1,9 @@
 package tudelft.wis.idm_tasks.boardGameTracker.JPA;
 
+import jakarta.persistence.Query;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import tudelft.wis.idm_tasks.boardGameTracker.JDBC.BgtException;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BgtDataManager;
 import tudelft.wis.idm_tasks.boardGameTracker.interfaces.BoardGame;
@@ -10,6 +12,7 @@ import tudelft.wis.idm_tasks.boardGameTracker.interfaces.Player;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 public class BgtDataManagerJPA implements BgtDataManager {
     private Collection<Player> players;
@@ -29,10 +32,11 @@ public class BgtDataManagerJPA implements BgtDataManager {
 
     @Override
     public Collection<Player> findPlayersByName(String name) throws BgtException {
-        //return players.stream().filter(x -> x.getPlayerName().equals(name)).toList();
-       // CriteriaBuilder cb = this.entityManager.getCriteriaBuilder();
-       // CriteriaQuery<T>
-        return null;
+        this.jpaManager.getEntityManager().getTransaction().begin();
+        Query query = this.jpaManager.getEntityManager()
+                .createQuery("SELECT p FROM PlayerJPA p WHERE p.name=:name");
+        query.setParameter("name", name);
+        return query.getResultList();
     }
 
     @Override
