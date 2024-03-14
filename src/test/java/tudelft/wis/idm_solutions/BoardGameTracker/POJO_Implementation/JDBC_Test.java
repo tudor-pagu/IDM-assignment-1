@@ -49,9 +49,9 @@ public class JDBC_Test extends tudelft.wis.idm_solutions.BoardGameTracker.Abstra
         // Create dummy data
         Collection<PlaySession> testSessions = this.createDummyData(12, 6);
 
-        for (PlaySession session : testSessions) {
-            Logger.info("Session Created: \n" + session.toVerboseString());
-        }
+//        for (PlaySession session : testSessions) {
+//            Logger.info("Session Created: \n" + session.toVerboseString());
+//        }
 
         // Get dummy session & related data
         PlaySession firstsession = testSessions.iterator().next();
@@ -84,7 +84,7 @@ public class JDBC_Test extends tudelft.wis.idm_solutions.BoardGameTracker.Abstra
 
         // Add the game again
         hostFromDB.getGameCollection().add(firstGame);
-        this.getBgtDataManager().persistPlayer(host);
+        this.getBgtDataManager().persistPlayer(hostFromDB);
 
         // Load the host again from DB
         Player hostFromDB2 = this.getBgtDataManager().findPlayersByName(host.getPlayerName()).iterator().next();
